@@ -1,11 +1,13 @@
 # Build stage
-FROM maven:3.9.9-eclipse-temurin-17 AS build
+# *** CHANGE: Switch from Java 17 to Java 21 image ***
+FROM maven:3.9.9-eclipse-temurin-21 AS build
 WORKDIR /app
 COPY . .
 RUN mvn clean package -DskipTests
 
 # Package stage
-FROM eclipse-temurin:17-jdk-alpine
+# *** CHANGE: Switch from Java 17 to Java 21 image ***
+FROM eclipse-temurin:21-jdk-alpine
 WORKDIR /app
 COPY --from=build /app/target/facebookapi-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080
